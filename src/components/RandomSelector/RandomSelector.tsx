@@ -21,8 +21,8 @@ export default function RandomSelector() {
     setIsSelecting(true);
     const interval = setInterval(() => {
       console.log(selectedItem)
-      setSelectedItem(selectedItem => (selectedItem + 1) % items.length);
-    }, 200);
+      setSelectedItem(Math.floor(Math.random() * items.length));
+    }, 500);
   }
 
   function handleAddNewItem(item: string) {
@@ -32,13 +32,13 @@ export default function RandomSelector() {
   return (
     <div className="flex flex-col gap-5">
       <div className="container  max-w-xs">
-        <TextInput onSubmit={handleAddNewItem} />
+        <TextInput disabled={isSelecting} onSubmit={handleAddNewItem} />
 
       </div>
-      <div className="flex container flex-wrap gap-2 mx-2 justify-center">
+      <div className="flex container flex-wrap gap-2  justify-center">
         {items.map((item, idx) => <Card highlight={selectedItem === idx} key={idx}  text={item} />)}
       </div>
-        <Button onClick={handleStartSelection} text="Choose for me" />
+        <Button disabled={isSelecting} onClick={handleStartSelection} text="Choose for me" />
         {isSelecting && <p>{selectedItem}</p>}
     </div>
   )

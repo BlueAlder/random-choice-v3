@@ -1,3 +1,5 @@
+import { X } from "lucide-preact"
+
 type Props = {
   text: string,
   highlight: boolean,
@@ -5,8 +7,12 @@ type Props = {
 
 export default function Card({text, highlight} : Props) {
   return (
-    <div className={`${highlight ? 'bg-green-500': 'bg-blue'} shadow-lg rounded w-44 h-20 py-5 overflow-clip overflow-ellipsis `}>
-      <span className="px-2">{text}</span>
+    <div class={`${highlight ? 'bg-green-300': 'bg-blue'} flex flex-col justify-center relative shadow-lg rounded w-40 h-20  `}>
+        
+      <X class="absolute top-0 right-0" size={18} />
+      <div className={` overflow-clip overflow-ellipsis mx-2`}>
+        <span >{text}</span>
+      </div>
     </div>
   )
 }
