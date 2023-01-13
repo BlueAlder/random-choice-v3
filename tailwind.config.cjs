@@ -8,7 +8,7 @@ module.exports = {
 				'blue': "#D6EFFF",
 				'orange': "#FED18C",
 				'yellow': "#FED99B",
-				'red': "#FE654F",
+				'red-p': "#FE654F",
 			}
 		},
 		container: {
