@@ -1,10 +1,10 @@
 import TextInput from "../TextInputWithButton";
-import { useState } from 'preact/hooks';
+import { useRef, useState } from 'preact/hooks';
 import Card from "../Card";
 import Button from "../Button";
 
 const bruh = [
-  "asdasd", 
+  "asdasd",
   "looooooooooong",
   "long but with different words",
   "s",
@@ -13,16 +13,28 @@ const bruh = [
 
 export default function RandomSelector() {
 
+  const intervalLength = 100;
+  const chooseDuration = 3000;
+
   const [items, setItems] = useState<string[]>(bruh)
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(-1);
+  const selectedItemRef = useRef(selectedItem);
+  selectedItemRef.current = selectedItem;
+  const [chosenItem, setChosenItem] = useState("");
 
   function handleStartSelection() {
     setIsSelecting(true);
     const interval = setInterval(() => {
-      console.log(selectedItem)
       setSelectedItem(Math.floor(Math.random() * items.length));
-    }, 500);
+    }, intervalLength);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      setIsSelecting(false);
+      setChosenItem(items[selectedItemRef.current]);
+      console.log(selectedItemRef.current)
+    }, chooseDuration)
   }
 
   function handleAddNewItem(item: string) {
@@ -36,10 +48,12 @@ export default function RandomSelector() {
 
       </div>
       <div className="flex container flex-wrap gap-2  justify-center">
-        {items.map((item, idx) => <Card highlight={selectedItem === idx} key={idx}  text={item} />)}
+        {items.map((item, idx) => <Card highlight={selectedItem === idx} key={idx} text={item} />)}
       </div>
-        <Button disabled={isSelecting} onClick={handleStartSelection} text="Choose for me" />
-        {isSelecting && <p>{selectedItem}</p>}
+      <Button disabled={isSelecting} onClick={handleStartSelection} text="Choose for me" />
+      <div>
+        <p>You should: {chosenItem}</p>
+      </div>
     </div>
   )
 }
